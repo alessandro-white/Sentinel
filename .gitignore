@@ -1,0 +1,32 @@
+## Build and output directories (.NET)
+bin/
+obj/
+out/
+publish/
+
+## Local Environment & Secrets
+.env
+*.env
+*.env.local
+appsettings.Local.json
+appsettings.Development.local.json
+
+## JetBrains Rider & Visual Studio IDE settings
+.idea/
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+## macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Trashes
+
+## Test results & logs
+[Tt]est[R]esult*/
+*.log
+*.tmp

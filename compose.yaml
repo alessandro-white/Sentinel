@@ -1,0 +1,43 @@
+﻿services:
+  sentinel.api:
+    image: sentinel.api
+    build:
+      context: .
+      dockerfile: src/Sentinel.Api/Dockerfile
+    ports:
+      - "5001:8080"
+    depends_on:
+      sentinel.sql:
+        condition: service_healthy
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sentinel.sql,1433;Database=SentinelDb;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+
+  sentinel.worker:
+    image: sentinel.worker
+    build:
+      context: .
+      dockerfile: src/Sentinel.Worker/Dockerfile
+    depends_on:
+      sentinel.sql:
+        condition: service_healthy
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sentinel.sql,1433;Database=SentinelDb;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+
+  sentinel.sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${SA_PASSWORD}
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqldata:/var/opt/mssql
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "${SA_PASSWORD}", "-C", "-Q", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+volumes:
+  sqldata:

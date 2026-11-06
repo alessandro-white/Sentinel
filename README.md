@@ -8,7 +8,7 @@ This repository contains the ASP.NET Core API, a background job runner (Worker S
 
 To run this stack locally, you need the following tools installed:
 * **Docker Desktop**.
-* **.NET SDK** (version 8.0 or later).
+* **.NET SDK** (version 10.0).
 * **Entity Framework Core CLI**. Install globally via terminal:
   ```bash
   dotnet tool install --global dotnet-ef

@@ -1,5 +1,6 @@
 using Sentinel.Worker;
 using Microsoft.EntityFrameworkCore;
+using Sentinel.Infrastructure;
 var builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddHostedService<Worker>();
 

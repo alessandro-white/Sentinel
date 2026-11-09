@@ -56,7 +56,13 @@ docker compose down
 
 Sentinel uses Entity Framework Core with a code-first approach. The database runs in Docker on port `1433`, but migration commands are executed from your host machine.
 
-*Ensure your local `appsettings.Development.json` (in `Sentinel.Api` and `Sentinel.Worker`) points to `Server=localhost,1433;` for local CLI execution, while `compose.yml` uses `Server=sentinel.sql,1433;`.*
+Run these commands from the repo root in a Bash or Zsh terminal. Docker Compose uses `compose.yaml` to supply the connection string inside the containers. For EF commands on your host, load `SA_PASSWORD` from your `.env` and set the connection string in that terminal.
+
+```bash
+docker compose up -d --wait sentinel.sql
+source ./.env
+export ConnectionStrings__DefaultConnection="Server=localhost,1433;Database=SentinelDb;User Id=sa;Password=\"${SA_PASSWORD//\"/\"\"}\";TrustServerCertificate=True;"
+```
 
 **1. Create a new migration:**
 Run this from the root directory whenever you change your domain entities:

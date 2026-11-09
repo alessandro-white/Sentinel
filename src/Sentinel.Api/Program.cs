@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
+using Sentinel.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
